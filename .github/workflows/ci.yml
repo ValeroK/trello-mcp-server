@@ -2,6 +2,7 @@ name: CI/CD & Security
 
 permissions:
   contents: read
+  packages: write
 
 on:
   push:
@@ -59,12 +60,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Log in to Docker Hub
-        if: github.ref == 'refs/heads/master'
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image with cache
         if: github.ref == 'refs/heads/master'
