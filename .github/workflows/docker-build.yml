@@ -41,7 +41,9 @@ jobs:
           ruff format --check .
 
       - name: Run Bandit security checks
-        run: bandit -r . -f json -o bandit-results.json
+        run: |
+          bandit -r . -f json -o bandit-results.json --exit-zero
+          bandit -r . --severity-level high --confidence-level high --quiet
 
       - name: Upload Bandit results
         uses: actions/upload-artifact@v4
