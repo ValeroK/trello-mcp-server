@@ -16,6 +16,7 @@ services:
       - TRELLO_API_KEY=${TRELLO_API_KEY}
       - TRELLO_API_SECRET=${TRELLO_API_SECRET}
       - TRELLO_TOKEN=${TRELLO_TOKEN}
+    network_mode: host
     ports:
       - "${MCP_SERVER_PORT:-8952}:8952"
       - "8953:8953"

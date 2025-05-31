@@ -12,7 +12,7 @@ jobs:
   build-and-check:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: valerok86/trello-mcp-server:latest
+      IMAGE_NAME: ghcr.io/valerok/trello-mcp-server:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
