@@ -120,8 +120,8 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            # Push 'latest' tag only for main branch pushes
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            # Push 'latest' tag only for master branch pushes
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
             # Push semver tags (e.g., v1.2.3)
             type=raw,value=${{ needs.version.outputs.version }}
             # Push major.minor.patch tag (e.g., 1.2.3)
@@ -161,7 +161,7 @@ jobs:
 
       - name: Scan image with Anchore Grype
         if: github.event_name != 'pull_request'
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v6
         with:
           image: ghcr.io/${{ github.repository }}:latest
           fail-build: false
