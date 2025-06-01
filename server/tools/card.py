@@ -44,19 +44,30 @@ async def get_card(context: Context, card_id: str) -> TrelloCard:
 
 
 @mcp.tool()
-async def get_cards(context: Context, list_id: str, from_date: Optional[str] = None) -> List[TrelloCard]:
-    """Retrieves all cards in a given list, optionally filtered by creation or last activity date.
+async def get_cards(context: Context, list_id: str, from_date: Optional[str] = None, card_ids: Optional[List[str]] = None) -> List[TrelloCard]:
+    """Retrieves all cards in a given list, or a specific set of cards by ID, optionally filtered by creation or last activity date.
 
     Args:
         list_id (str): The ID of the list whose cards to retrieve.
         from_date (str, optional): ISO 8601 date string. Only cards created or updated on/after this date are returned.
+        card_ids (List[str], optional): List of card IDs to fetch. If provided, only these cards are returned.
 
     Returns:
         List[TrelloCard]: A list of card objects.
     """
     try:
         logger.info(f"Getting cards for list: {list_id}")
-        result = await service.get_cards(list_id)
+        if card_ids:
+            cards = []
+            for card_id in card_ids:
+                try:
+                    card = await service.get_card(card_id)
+                    cards.append(card)
+                except Exception as e:
+                    await context.error(f"Failed to fetch card {card_id}: {str(e)}")
+            result = cards
+        else:
+            result = await service.get_cards(list_id)
         logger.info(f"Successfully retrieved {len(result)} cards for list: {list_id}")
         if from_date:
             try:
