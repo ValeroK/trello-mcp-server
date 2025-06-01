@@ -34,7 +34,9 @@ async def get_list(ctx: Context, list_id: str) -> TrelloList:
         logger.info(f"Successfully retrieved list: {list_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to get list: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to get list: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await ctx.error(error_msg)
         raise
@@ -56,7 +58,9 @@ async def get_lists(ctx: Context, board_id: str) -> List[TrelloList]:
         logger.info(f"Successfully retrieved {len(result)} lists for board: {board_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to get lists: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to get lists: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await ctx.error(error_msg)
         raise
@@ -82,7 +86,9 @@ async def create_list(
         logger.info(f"Successfully created list '{name}' in board: {board_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to create list: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to create list: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await ctx.error(error_msg)
         raise
@@ -105,7 +111,9 @@ async def update_list(ctx: Context, list_id: str, name: str) -> TrelloList:
         logger.info(f"Successfully updated list: {list_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to update list: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to update list: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await ctx.error(error_msg)
         raise
@@ -127,7 +135,9 @@ async def delete_list(ctx: Context, list_id: str) -> TrelloList:
         logger.info(f"Successfully archived list: {list_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to delete list: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to archive list: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await ctx.error(error_msg)
         raise

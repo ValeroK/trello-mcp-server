@@ -19,7 +19,7 @@ COPY pyproject.toml uv.lock ./
 # Install dependencies
 RUN . /app/.venv/bin/activate && \
     uv pip install --system -e . && \
-    pip install --no-cache-dir fastmcp==2.5.1 fastapi uvicorn
+    pip install --no-cache-dir fastmcp fastapi uvicorn
 
 # Final stage
 FROM python:3.12-slim

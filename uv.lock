@@ -69,7 +69,7 @@ wheels = [
 
 [[package]]
 name = "fastmcp"
-version = "2.5.1"
+version = "^2.5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "exceptiongroup" },
@@ -358,7 +358,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fastmcp", specifier = "==2.5.1" },
+    { name = "fastmcp", specifier = "^2.5.2" },
     { name = "httpx", specifier = ">=0.28.1" },
 ]
 

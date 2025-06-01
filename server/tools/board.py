@@ -33,7 +33,9 @@ async def get_board(context: Context, board_id: str) -> TrelloBoard:
         logger.info(f"Successfully retrieved board: {board_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to get board: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to get board: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
@@ -46,13 +48,15 @@ async def get_boards(context: Context) -> List[TrelloBoard]:
     Returns:
         List[TrelloBoard]: A list of board objects.
     """
+    import traceback
     try:
         logger.info("Getting all boards")
         result = await service.get_boards()
         logger.info(f"Successfully retrieved {len(result)} boards")
         return result
     except Exception as e:
-        error_msg = f"Failed to get boards: {str(e)}"
+        tb = traceback.format_exc()
+        error_msg = f"Failed to get boards: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise

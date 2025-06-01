@@ -35,7 +35,9 @@ async def get_card(context: Context, card_id: str) -> TrelloCard:
         logger.info(f"Successfully retrieved card: {card_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to get card: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to get card: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
@@ -71,7 +73,9 @@ async def get_cards(context: Context, list_id: str, from_date: Optional[str] = N
             return filtered
         return result
     except Exception as e:
-        error_msg = f"Failed to get cards: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to get cards: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
@@ -97,7 +101,9 @@ async def create_card(
         logger.info(f"Successfully created card in list: {list_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to create card: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to create card: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
@@ -124,7 +130,9 @@ async def update_card(
         logger.info(f"Successfully updated card: {card_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to update card: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to update card: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
@@ -146,7 +154,9 @@ async def delete_card(context: Context, card_id: str) -> dict:
         logger.info(f"Successfully deleted card: {card_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to delete card: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to delete card: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
@@ -170,7 +180,9 @@ async def move_card(context: Context, card_id: str, target_list_id: str) -> Trel
         logger.info(f"Successfully moved card {card_id} to list {target_list_id}")
         return result
     except Exception as e:
-        error_msg = f"Failed to move card: {str(e)}"
+        import traceback
+        tb = traceback.format_exc()
+        error_msg = f"Failed to move card: {str(e)}\nTraceback:\n{tb}"
         logger.error(error_msg)
         await context.error(error_msg)
         raise
