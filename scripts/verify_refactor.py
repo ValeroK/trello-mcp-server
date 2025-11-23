@@ -15,10 +15,10 @@ logger = logging.getLogger(__name__)
 
 # Import the tool to verify
 # We need to make sure the server module is in the path
-import sys
+import sys  # noqa: E402
 sys.path.append(os.getcwd())
 
-from server.tools.board import get_boards
+from server.tools.board import get_boards  # noqa: E402
 
 async def verify():
     print("Verifying get_boards tool...")

@@ -1,7 +1,6 @@
 # trello_api.py
 import logging
 import asyncio
-import os
 
 import httpx
 

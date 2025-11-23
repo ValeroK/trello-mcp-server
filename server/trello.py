@@ -1,5 +1,4 @@
 import logging
-import os
 
 
 from server.utils.trello_api import TrelloClient
