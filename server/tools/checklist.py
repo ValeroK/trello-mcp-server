@@ -10,12 +10,14 @@ from mcp.server.fastmcp import Context
 from server.services.checklist import ChecklistService
 from server.trello import client
 from server.mcp_instance import mcp
+from server.utils.decorators import mcp_tool
 
 logger = logging.getLogger(__name__)
 service = ChecklistService(client)
 
 
 @mcp.tool()
+@mcp_tool
 async def get_checklist(context: Context, checklist_id: str) -> Dict:
     """
     Get a specific checklist by ID.
@@ -26,18 +28,11 @@ async def get_checklist(context: Context, checklist_id: str) -> Dict:
     Returns:
         Dict: The checklist data
     """
-    import traceback
-    try:
-        return await service.get_checklist(checklist_id)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to get checklist: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.get_checklist(checklist_id)
 
 
 @mcp.tool()
+@mcp_tool
 async def get_card_checklists(context: Context, card_id: str) -> List[Dict]:
     """
     Get all checklists for a specific card.
@@ -48,18 +43,11 @@ async def get_card_checklists(context: Context, card_id: str) -> List[Dict]:
     Returns:
         List[Dict]: List of checklists on the card
     """
-    import traceback
-    try:
-        return await service.get_card_checklists(card_id)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to get card checklists: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.get_card_checklists(card_id)
 
 
 @mcp.tool()
+@mcp_tool
 async def create_checklist(context: Context, card_id: str, name: str, pos: Optional[str] = None) -> Dict:
     """
     Create a new checklist on a card.
@@ -72,18 +60,11 @@ async def create_checklist(context: Context, card_id: str, name: str, pos: Optio
     Returns:
         Dict: The created checklist data
     """
-    import traceback
-    try:
-        return await service.create_checklist(card_id, name, pos)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to create checklist: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.create_checklist(card_id, name, pos)
 
 
 @mcp.tool()
+@mcp_tool
 async def update_checklist(context: Context, checklist_id: str, name: Optional[str] = None, pos: Optional[str] = None) -> Dict:
     """
     Update an existing checklist.
@@ -96,18 +77,11 @@ async def update_checklist(context: Context, checklist_id: str, name: Optional[s
     Returns:
         Dict: The updated checklist data
     """
-    import traceback
-    try:
-        return await service.update_checklist(checklist_id, name, pos)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to update checklist: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.update_checklist(checklist_id, name, pos)
 
 
 @mcp.tool()
+@mcp_tool
 async def delete_checklist(context: Context, checklist_id: str) -> Dict:
     """
     Delete a checklist.
@@ -118,18 +92,11 @@ async def delete_checklist(context: Context, checklist_id: str) -> Dict:
     Returns:
         Dict: The response from the delete operation
     """
-    import traceback
-    try:
-        return await service.delete_checklist(checklist_id)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to delete checklist: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.delete_checklist(checklist_id)
 
 
 @mcp.tool()
+@mcp_tool
 async def add_checkitem(context: Context, checklist_id: str, name: str, checked: bool = False, pos: Optional[str] = None) -> Dict:
     """
     Add a new item to a checklist.
@@ -143,18 +110,11 @@ async def add_checkitem(context: Context, checklist_id: str, name: str, checked:
     Returns:
         Dict: The created checkitem data
     """
-    import traceback
-    try:
-        return await service.add_checkitem(checklist_id, name, checked, pos)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to add checkitem: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.add_checkitem(checklist_id, name, checked, pos)
 
 
 @mcp.tool()
+@mcp_tool
 async def update_checkitem(context: Context, checklist_id: str, checkitem_id: str, name: Optional[str] = None, checked: Optional[bool] = None, pos: Optional[str] = None) -> Dict:
     """
     Update a checkitem in a checklist.
@@ -169,18 +129,11 @@ async def update_checkitem(context: Context, checklist_id: str, checkitem_id: st
     Returns:
         Dict: The updated checkitem data
     """
-    import traceback
-    try:
-        return await service.update_checkitem(checklist_id, checkitem_id, name, checked, pos)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to update checkitem: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.update_checkitem(checklist_id, checkitem_id, name, checked, pos)
 
 
 @mcp.tool()
+@mcp_tool
 async def delete_checkitem(context: Context, checklist_id: str, checkitem_id: str) -> Dict:
     """
     Delete a checkitem from a checklist.
@@ -192,12 +145,4 @@ async def delete_checkitem(context: Context, checklist_id: str, checkitem_id: st
     Returns:
         Dict: The response from the delete operation
     """
-    import traceback
-    try:
-        return await service.delete_checkitem(checklist_id, checkitem_id)
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to delete checkitem: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.delete_checkitem(checklist_id, checkitem_id)

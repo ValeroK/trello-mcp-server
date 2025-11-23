@@ -11,6 +11,7 @@ from server.models import TrelloList
 from server.services.list import ListService
 from server.trello import client
 from server.mcp_instance import mcp
+from server.utils.decorators import mcp_tool
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,7 @@ service = ListService(client)
 
 # List Tools
 @mcp.tool()
+@mcp_tool
 async def get_list(ctx: Context, list_id: str) -> TrelloList:
     """Retrieves a specific list by its ID.
 
@@ -28,21 +30,11 @@ async def get_list(ctx: Context, list_id: str) -> TrelloList:
     Returns:
         TrelloList: The list object containing list details.
     """
-    try:
-        logger.info(f"Getting list with ID: {list_id}")
-        result = await service.get_list(list_id)
-        logger.info(f"Successfully retrieved list: {list_id}")
-        return result
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        error_msg = f"Failed to get list: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await ctx.error(error_msg)
-        raise
+    return await service.get_list(list_id)
 
 
 @mcp.tool()
+@mcp_tool
 async def get_lists(ctx: Context, board_id: str) -> List[TrelloList]:
     """Retrieves all lists on a given board.
 
@@ -52,21 +44,11 @@ async def get_lists(ctx: Context, board_id: str) -> List[TrelloList]:
     Returns:
         List[TrelloList]: A list of list objects.
     """
-    try:
-        logger.info(f"Getting lists for board: {board_id}")
-        result = await service.get_lists(board_id)
-        logger.info(f"Successfully retrieved {len(result)} lists for board: {board_id}")
-        return result
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        error_msg = f"Failed to get lists: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await ctx.error(error_msg)
-        raise
+    return await service.get_lists(board_id)
 
 
 @mcp.tool()
+@mcp_tool
 async def create_list(
     ctx: Context, board_id: str, name: str, pos: str = "bottom"
 ) -> TrelloList:
@@ -80,21 +62,11 @@ async def create_list(
     Returns:
         TrelloList: The newly created list object.
     """
-    try:
-        logger.info(f"Creating list '{name}' in board: {board_id}")
-        result = await service.create_list(board_id, name, pos)
-        logger.info(f"Successfully created list '{name}' in board: {board_id}")
-        return result
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        error_msg = f"Failed to create list: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await ctx.error(error_msg)
-        raise
+    return await service.create_list(board_id, name, pos)
 
 
 @mcp.tool()
+@mcp_tool
 async def update_list(ctx: Context, list_id: str, name: str) -> TrelloList:
     """Updates the name of a list.
 
@@ -105,21 +77,11 @@ async def update_list(ctx: Context, list_id: str, name: str) -> TrelloList:
     Returns:
         TrelloList: The updated list object.
     """
-    try:
-        logger.info(f"Updating list {list_id} with new name: {name}")
-        result = await service.update_list(list_id, name)
-        logger.info(f"Successfully updated list: {list_id}")
-        return result
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        error_msg = f"Failed to update list: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await ctx.error(error_msg)
-        raise
+    return await service.update_list(list_id, name)
 
 
 @mcp.tool()
+@mcp_tool
 async def delete_list(ctx: Context, list_id: str) -> TrelloList:
     """Archives a list.
 
@@ -129,15 +91,4 @@ async def delete_list(ctx: Context, list_id: str) -> TrelloList:
     Returns:
         TrelloList: The archived list object.
     """
-    try:
-        logger.info(f"Archiving list: {list_id}")
-        result = await service.delete_list(list_id)
-        logger.info(f"Successfully archived list: {list_id}")
-        return result
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        error_msg = f"Failed to archive list: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await ctx.error(error_msg)
-        raise
+    return await service.delete_list(list_id)

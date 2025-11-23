@@ -11,6 +11,7 @@ from server.models import TrelloBoard
 from server.services.board import BoardService
 from server.trello import client
 from server.mcp_instance import mcp
+from server.utils.decorators import mcp_tool
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,7 @@ service = BoardService(client)
 
 
 @mcp.tool()
+@mcp_tool
 async def get_board(context: Context, board_id: str) -> TrelloBoard:
     """Retrieves a specific board by its ID.
 
@@ -27,36 +29,15 @@ async def get_board(context: Context, board_id: str) -> TrelloBoard:
     Returns:
         TrelloBoard: The board object containing board details.
     """
-    try:
-        logger.info(f"Getting board with ID: {board_id}")
-        result = await service.get_board(board_id)
-        logger.info(f"Successfully retrieved board: {board_id}")
-        return result
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        error_msg = f"Failed to get board: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.get_board(board_id)
 
 
 @mcp.tool()
+@mcp_tool
 async def get_boards(context: Context) -> List[TrelloBoard]:
     """Retrieves all boards for the authenticated user.
 
     Returns:
         List[TrelloBoard]: A list of board objects.
     """
-    import traceback
-    try:
-        logger.info("Getting all boards")
-        result = await service.get_boards()
-        logger.info(f"Successfully retrieved {len(result)} boards")
-        return result
-    except Exception as e:
-        tb = traceback.format_exc()
-        error_msg = f"Failed to get boards: {str(e)}\nTraceback:\n{tb}"
-        logger.error(error_msg)
-        await context.error(error_msg)
-        raise
+    return await service.get_boards()
