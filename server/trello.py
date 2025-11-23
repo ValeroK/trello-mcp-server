@@ -1,7 +1,6 @@
 import logging
 import os
 
-from dotenv import load_dotenv
 
 from server.utils.trello_api import TrelloClient
 
@@ -11,19 +10,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-load_dotenv()
-
-
 # Initialize Trello client and service
 try:
-    api_key = os.getenv("TRELLO_API_KEY")
-    token = os.getenv("TRELLO_TOKEN")
-    if not api_key or not token:
-        raise ValueError(
-            "TRELLO_API_KEY and TRELLO_TOKEN must be set in environment variables"
-        )
-    client = TrelloClient(api_key=api_key, token=token)
+    from server.config import settings
+    
+    client = TrelloClient(api_key=settings.TRELLO_API_KEY, token=settings.TRELLO_TOKEN)
     logger.info("Trello client and service initialized successfully")
 except Exception as e:
     logger.error(f"Failed to initialize Trello client: {str(e)}")

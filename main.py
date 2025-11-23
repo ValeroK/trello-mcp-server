@@ -1,6 +1,4 @@
 import logging
-import os
-from dotenv import load_dotenv
 from server.mcp_instance import mcp
 import server.tools.board as board  # noqa: F401
 import server.tools.card as card  # noqa: F401
@@ -20,27 +18,17 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
-# Load environment variables
-load_dotenv()
-
-host = os.getenv("MCP_SERVER_HOST", "0.0.0.0")
-port = int(os.getenv("MCP_SERVER_PORT", "8952"))
-mcp.settings.host = host
-mcp.settings.port = port
-
 if __name__ == "__main__":
     try:
         # Verify environment variables
-        if not os.getenv("TRELLO_API_KEY") or not os.getenv("TRELLO_TOKEN"):
-            raise ValueError(
-                "TRELLO_API_KEY and TRELLO_TOKEN must be set in environment variables"
-            )
-        use_claude = os.getenv("USE_CLAUDE_APP", "true").lower() == "true"
-        if use_claude:
+        # Note: Settings validation ensures these exist at startup
+        from server.config import settings
+        
+        if settings.USE_CLAUDE_APP:
             logger.info("Starting Trello MCP Server in Claude app mode...")
             mcp.run(transport="stdio")  # Explicitly use stdio transport for Claude
         else:
-            logger.info(f"Starting Trello MCP Server in SSE mode at http://{host}:{port}/sse")
+            logger.info(f"Starting Trello MCP Server in SSE mode at http://{settings.MCP_SERVER_HOST}:{settings.MCP_SERVER_PORT}/sse")
             mcp.run(transport="sse")
     except KeyboardInterrupt:
         logger.info("Shutting down server...")

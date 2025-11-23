@@ -4,20 +4,83 @@ A powerful MCP server for interacting with Trello boards, lists, and cards via A
 
 ## Quick Start
 
-To get started quickly, follow these steps:
+### Option 1: MCP Configuration (Recommended)
 
-1. **Update your `.env` file** with your Trello API credentials:
-   - Copy `.env.example` to `.env` if you haven't already:
-     ```sh
-     cp .env.example .env
-     ```
-   - Edit `.env` and fill in your Trello API key and token:
-     ```env
-     TRELLO_API_KEY=your_trello_api_key_here
-     TRELLO_TOKEN=your_trello_token_here
-     MCP_SERVER_HOST=127.0.0.1
-     # ...other settings...
-     ```
+The easiest way to use this server is through MCP configuration. This allows your MCP client to automatically manage the Docker container:
+
+1. **Get your Trello credentials** from [Trello Power-Ups Admin](https://trello.com/power-ups/admin)
+
+2. **Add the configuration to your MCP client's config file:**
+
+   For **Cursor** (`~/.cursor/mcp.json`):
+   ```json
+   {
+     "mcpServers": {
+       "trello-mcp-server": {
+         "command": "docker",
+         "args": [
+           "run", "-i", "--rm",
+           "--name", "trello-mcp-server",
+           "-e", "TRELLO_API_KEY",
+           "-e", "TRELLO_TOKEN",
+           "-e", "USE_CLAUDE_APP",
+           "-e", "MCP_SERVER_NAME",
+           "-e", "MCP_SERVER_HOST",
+           "-e", "MCP_SERVER_PORT",
+           "ghcr.io/valerok/trello-mcp-server:latest"
+         ],
+         "env": {
+           "TRELLO_API_KEY": "your_trello_api_key_here",
+           "TRELLO_TOKEN": "your_trello_token_here",
+           "USE_CLAUDE_APP": "false",
+           "MCP_SERVER_HOST": "127.0.0.1",
+           "MCP_SERVER_PORT": "8952",
+           "MCP_SERVER_NAME": "Trello MCP Server"
+         }
+       }
+     }
+   }
+   ```
+
+   For **Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+   ```json
+   {
+     "mcpServers": {
+       "trello-mcp-server": {
+         "command": "docker",
+         "args": [
+           "run", "--rm", "-i",
+           "--name", "trello-mcp-server",
+           "-e", "TRELLO_API_KEY",
+           "-e", "TRELLO_TOKEN",
+           "-e", "USE_CLAUDE_APP",
+           "-e", "MCP_SERVER_NAME",
+           "ghcr.io/valerok/trello-mcp-server:latest"
+         ],
+         "env": {
+           "TRELLO_API_KEY": "your_trello_api_key_here",
+           "TRELLO_TOKEN": "your_trello_token_here",
+           "USE_CLAUDE_APP": "true",
+           "MCP_SERVER_NAME": "Trello MCP Server"
+         }
+       }
+     }
+   }
+   ```
+
+3. **Restart your MCP client** - the server will start automatically!
+
+📖 **See [MCP_SETUP.md](./MCP_SETUP.md) for detailed setup instructions**
+
+### Option 2: Manual Docker Run
+
+If you prefer to manage the Docker container manually:
+
+1. **Create a `.env` file** with your Trello API credentials:
+   ```sh
+   cp ".env example" .env
+   # Edit .env and add your credentials
+   ```
 
 2. **Run the MCP server using Docker:**
    ```sh
@@ -30,16 +93,14 @@ To get started quickly, follow these steps:
      -p 8952:8952 \
      ghcr.io/valerok/trello-mcp-server:latest
    ```
-   This will start the server in detached mode, using your `.env` file for configuration.
-   - With `--network host`, the container will listen on the same network interfaces as your host machine.
-   This ensures the server only listens on localhost, which is recommended for local development with host networking.
 
-3. **Connect your MCP-compatible client (e.g., Cursor, Claude Desktop) to** `http://localhost:8952/sse`.
+3. **Connect your MCP-compatible client to** `http://localhost:8952/sse`
 
 ---
 
 ## Table of Contents
-- [Table of Contents](#table-of-contents)
+- [Quick Start](#quick-start)
+- [MCP Configuration Setup](#mcp-configuration-setup)
 - [Prerequisites](#prerequisites)
 - [Pre-installation](#pre-installation)
 - [Installation](#installation)
@@ -54,6 +115,23 @@ To get started quickly, follow these steps:
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
+
+---
+
+## MCP Configuration Setup
+
+**For detailed MCP setup instructions with Docker, see [MCP_SETUP.md](./MCP_SETUP.md)**
+
+This server now supports configuration through MCP config files, where you can:
+- Define all environment variables (API keys, tokens) directly in the config
+- Let your MCP client automatically manage the Docker container
+- No need for separate `.env` files
+- Portable configuration across machines
+
+Example configuration files are provided:
+- `mcp-config-claude.json` - For Claude Desktop
+- `mcp-config-cursor.json` - For Cursor
+- `mcp-config-example.json` - Generic template
 
 
 ## Prerequisites

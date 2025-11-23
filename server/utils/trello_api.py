@@ -73,7 +73,7 @@ class TrelloClient:
             if e.response.status_code == 401:
                 headers = getattr(e.response, "headers", {})
                 print("WWW-Authenticate header:", headers.get("WWW-Authenticate"))
-                api_key = os.getenv("TRELLO_API_KEY", self.api_key)
+                api_key = self.api_key
                 auth_url = f"https://trello.com/1/authorize?expiration=never&name=Trello+Assistant+MCP&scope=read,write&response_type=token&key={api_key}"
                 logger.info(f"Trello authorization required. Please visit this URL to authorize the app: {auth_url}")
             logger.error(f"HTTP error: {e} | endpoint: {endpoint} | params: {redact_sensitive(all_params)}")
@@ -97,7 +97,7 @@ class TrelloClient:
             if e.response.status_code == 401:
                 headers = getattr(e.response, "headers", {})
                 print("WWW-Authenticate header:", headers.get("WWW-Authenticate"))
-                api_key = os.getenv("TRELLO_API_KEY", self.api_key)
+                api_key = self.api_key
                 auth_url = f"https://trello.com/1/authorize?expiration=never&name=Trello+Assistant+MCP&scope=read,write&response_type=token&key={api_key}"
                 logger.info(f"Trello authorization required. Please visit this URL to authorize the app: {auth_url}")
             logger.error(f"HTTP error: {e} | endpoint: {endpoint} | params: {redact_sensitive(all_params)}")
@@ -121,7 +121,7 @@ class TrelloClient:
             if e.response.status_code == 401:
                 headers = getattr(e.response, "headers", {})
                 print("WWW-Authenticate header:", headers.get("WWW-Authenticate"))
-                api_key = os.getenv("TRELLO_API_KEY", self.api_key)
+                api_key = self.api_key
                 auth_url = f"https://trello.com/1/authorize?expiration=never&name=Trello+Assistant+MCP&scope=read,write&response_type=token&key={api_key}"
                 logger.info(f"Trello authorization required. Please visit this URL to authorize the app: {auth_url}")
             logger.error(f"HTTP error: {e} | endpoint: {endpoint} | params: {redact_sensitive(all_params)}")
@@ -147,7 +147,7 @@ class TrelloClient:
             if e.response.status_code == 401:
                 headers = getattr(e.response, "headers", {})
                 print("WWW-Authenticate header:", headers.get("WWW-Authenticate"))
-                api_key = os.getenv("TRELLO_API_KEY", self.api_key)
+                api_key = self.api_key
                 auth_url = f"https://trello.com/1/authorize?expiration=never&name=Trello+Assistant+MCP&scope=read,write&response_type=token&key={api_key}"
                 logger.info(f"Trello authorization required. Please visit this URL to authorize the app: {auth_url}")
             logger.error(f"HTTP error: {e} | endpoint: {endpoint} | params: {redact_sensitive(all_params)}")

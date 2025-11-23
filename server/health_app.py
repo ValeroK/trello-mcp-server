@@ -2,13 +2,15 @@ from server.mcp_instance import mcp
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.status import HTTP_503_SERVICE_UNAVAILABLE
-import os
 import httpx
 
 @mcp.custom_route("/health", methods=["GET"])
 async def health_check(request: Request) -> JSONResponse:
     # Check for required environment variables
-    if not os.getenv("TRELLO_API_KEY") or not os.getenv("TRELLO_TOKEN"):
+    # Note: Settings validation ensures these exist at startup, but we check here for completeness
+    from server.config import settings
+    
+    if not settings.TRELLO_API_KEY or not settings.TRELLO_TOKEN:
         return JSONResponse(
             {"status": "unhealthy", "reason": "Missing Trello credentials"},
             status_code=HTTP_503_SERVICE_UNAVAILABLE
@@ -19,8 +21,8 @@ async def health_check(request: Request) -> JSONResponse:
             response = await client.get(
                 "https://api.trello.com/1/members/me",
                 params={
-                    "key": os.getenv("TRELLO_API_KEY"),
-                    "token": os.getenv("TRELLO_TOKEN")
+                    "key": settings.TRELLO_API_KEY,
+                    "token": settings.TRELLO_TOKEN
                 },
                 timeout=5.0
             )

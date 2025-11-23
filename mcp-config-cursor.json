@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "trello-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "trello-mcp-server",
+        "-e",
+        "TRELLO_API_KEY",
+        "-e",
+        "TRELLO_TOKEN",
+        "-e",
+        "USE_CLAUDE_APP",
+        "-e",
+        "MCP_SERVER_NAME",
+        "ghcr.io/valerok/trello-mcp-server:latest"
+      ],
+      "env": {
+        "TRELLO_API_KEY": "your_trello_api_key_here",
+        "TRELLO_TOKEN": "your_trello_token_here",
+        "USE_CLAUDE_APP": "true",
+        "MCP_SERVER_NAME": "Trello MCP Server"
+      }
+    }
+  }
+}
