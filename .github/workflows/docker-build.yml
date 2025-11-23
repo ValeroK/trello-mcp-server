@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -64,7 +64,7 @@ jobs:
       majorMinor: ${{ steps.gitversion.outputs.major }}.${{ steps.gitversion.outputs.minor }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0 # Required for GitVersion
 
@@ -88,7 +88,7 @@ jobs:
       packages: write # Needed to push to GHCR
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         # No need for fetch-depth: 0 here unless your Dockerfile needs git history
 
       # QEMU is needed for multi-platform builds other than the host arch
