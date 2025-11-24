@@ -470,7 +470,30 @@ If you encounter issues:
 4. Check the logs for any error messages with `uv run mcp dev main.py` command.
 5. Make sure uv is properly installed and in your PATH
 
-## Contributing
+## Development
+ 
+ ### Running Tests
+ 
+ This project uses `pytest` for testing. To run the tests locally:
+ 
+ 1. Install development dependencies:
+    ```bash
+    uv pip install -e ".[dev]"
+    ```
+ 
+ 2. Run tests:
+    ```bash
+    PYTHONPATH=. uv run pytest tests/
+    ```
+ 
+ ### CI/CD
+ 
+ This project uses GitHub Actions for Continuous Integration. The workflow is defined in `.github/workflows/ci.yml` and runs on every push and pull request to the `main` branch. It automatically:
+ - Sets up Python
+ - Installs dependencies
+ - Runs the test suite
+ 
+ ## Contributing
 
 Feel free to submit issues and enhancement requests!
 
