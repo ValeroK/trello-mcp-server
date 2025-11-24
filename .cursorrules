@@ -1,0 +1,2 @@
+Always use `uv` when running python commands.
+Example: `uv run python ...` or `uv run pytest ...`
