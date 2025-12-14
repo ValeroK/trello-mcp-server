@@ -33,6 +33,7 @@ RUN apt-get update && \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+
 # Copy virtual environment from builder
 COPY --from=builder /app/.venv /app/.venv
 

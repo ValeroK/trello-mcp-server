@@ -3,16 +3,20 @@ import logging
 
 from server.utils.trello_api import TrelloClient
 
+import sys
+
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    stream=sys.stderr,
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
 # Initialize Trello client and service
 try:
     from server.config import settings
-    
+
     client = TrelloClient(api_key=settings.TRELLO_API_KEY, token=settings.TRELLO_TOKEN)
     logger.info("Trello client and service initialized successfully")
 except Exception as e:

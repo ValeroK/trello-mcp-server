@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: trello-mcp:latest
+    image: ghcr.io/valerok/trello-mcp-server:latest
     container_name: trello-mcp
     restart: unless-stopped
     environment:

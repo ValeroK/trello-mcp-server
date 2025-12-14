@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 logging.getLogger("httpx").setLevel(logging.ERROR)
 
 # Add a console handler for development
-console_handler = logging.StreamHandler()
+import sys
+
+console_handler = logging.StreamHandler(sys.stderr)
 console_handler.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 console_handler.setFormatter(formatter)
@@ -23,12 +25,14 @@ if __name__ == "__main__":
         # Verify environment variables
         # Note: Settings validation ensures these exist at startup
         from server.config import settings
-        
+
         if settings.USE_CLAUDE_APP:
             logger.info("Starting Trello MCP Server in Claude app mode...")
             mcp.run(transport="stdio")  # Explicitly use stdio transport for Claude
         else:
-            logger.info(f"Starting Trello MCP Server in SSE mode at http://{settings.MCP_SERVER_HOST}:{settings.MCP_SERVER_PORT}/sse")
+            logger.info(
+                f"Starting Trello MCP Server in SSE mode at http://{settings.MCP_SERVER_HOST}:{settings.MCP_SERVER_PORT}/sse"
+            )
             mcp.run(transport="sse")
     except KeyboardInterrupt:
         logger.info("Shutting down server...")

@@ -12,7 +12,7 @@ fi
 
 # Function to handle graceful shutdown
 cleanup() {
-    echo "Received shutdown signal, cleaning up..."
+    echo "Received shutdown signal, cleaning up..." >&2
     # Add any cleanup tasks here
     exit 0
 }
@@ -21,5 +21,5 @@ cleanup() {
 trap cleanup SIGTERM SIGINT
 
 # Start the application
-echo "Starting Trello MCP Server..."
+echo "Starting Trello MCP Server..." >&2
 exec python main.py 
