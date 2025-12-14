@@ -31,6 +31,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     tini \
     curl \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -57,7 +58,7 @@ EXPOSE ${MCP_SERVER_PORT}
 
 # Copy and set up entrypoint
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN dos2unix /entrypoint.sh && chmod +x /entrypoint.sh
 
 # Switch to non-root user
 USER appuser

@@ -3,7 +3,7 @@ set -e
 
 # Ensure required directories exist and have correct permissions
 mkdir -p /app/logs
-chown -R appuser:appgroup /app
+chown -R appuser:appgroup /app/logs
 
 # Activate virtual environment if needed
 if [ -d "/app/.venv" ]; then
