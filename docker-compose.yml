@@ -32,7 +32,8 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 512M
+          # Override with MCP_DOCKER_MEMORY_LIMIT in .env (e.g. 128M, 256M, 512M)
+          memory: ${MCP_DOCKER_MEMORY_LIMIT:-256M}
     logging:
       driver: "json-file"
       options:

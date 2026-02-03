@@ -107,12 +107,14 @@ export MCP_SERVER_PORT=${MCP_SERVER_PORT:-8952}
 export MCP_SERVER_HOST=${MCP_SERVER_HOST:-127.0.0.1}
 export USE_CLAUDE_APP=${USE_CLAUDE_APP:-false}
 export MCP_SERVER_NAME=${MCP_SERVER_NAME:-"Trello MCP Server"}
+export MCP_DOCKER_MEMORY_LIMIT=${MCP_DOCKER_MEMORY_LIMIT:-256m}
 
 print_debug "Configuration:"
 print_debug "  MCP_SERVER_PORT=$MCP_SERVER_PORT"
 print_debug "  MCP_SERVER_HOST=$MCP_SERVER_HOST"
 print_debug "  USE_CLAUDE_APP=$USE_CLAUDE_APP"
 print_debug "  MCP_SERVER_NAME=$MCP_SERVER_NAME"
+print_debug "  MCP_DOCKER_MEMORY_LIMIT=$MCP_DOCKER_MEMORY_LIMIT"
 
 # Check if container is already running
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
@@ -151,6 +153,7 @@ docker run \
     --name "$CONTAINER_NAME" \
     --restart unless-stopped \
     -d \
+    --memory "$MCP_DOCKER_MEMORY_LIMIT" \
     -e "TRELLO_API_KEY=$TRELLO_API_KEY" \
     -e "TRELLO_TOKEN=$TRELLO_TOKEN" \
     -e "USE_CLAUDE_APP=$USE_CLAUDE_APP" \

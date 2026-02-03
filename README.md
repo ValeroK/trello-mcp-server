@@ -227,6 +227,8 @@ docker-compose logs -f
 docker-compose down
 ```
 
+**Resource limits:** The container is limited to 256MB RAM by default. Set `MCP_DOCKER_MEMORY_LIMIT` in your `.env` (e.g. `128M`, `256M`, `512M`) to change the limit when using Docker Compose or `start-mcp-docker.sh`.
+
 #### Pulling the Docker Image (Alternative to Building)
 
 - A pre-built image is available at Docker Hub and is updated automatically by CI:

@@ -10,3 +10,6 @@ MCP_SERVER_HOST=127.0.0.1
 # Set to 'true' to use Claude, 'false' to use other LLMs via SSE
 # Default is true to prefer Claude app integration
 USE_CLAUDE_APP=false
+
+# Docker container memory limit (e.g. 128M, 256M, 512M). Used by docker-compose and start-mcp-docker.sh
+# MCP_DOCKER_MEMORY_LIMIT=256M
